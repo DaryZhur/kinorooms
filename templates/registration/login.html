@@ -1,0 +1,39 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>Ваш логин или пароль неверен. Пожалуйста попробуйте снова.</p>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Ваш аккаунт не имеет доступа к этому ресурсу. Попробуйте войти.</p>
+{% else %}
+<p>Войдите чтобы смотреть содержимое.</p>
+{% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+        <p20>KINOROOMS</p20>
+        <td><td>
+        <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+        </tr>
+
+        <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+        </tr>
+    </table>
+
+    <input type="submit" value="Вход"/>
+    <input type="hidden" name="next" value="{{ next }}"/>
+</form>
+
+<p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+
+{% endblock %}
